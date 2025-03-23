@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.exception.NotFoundException;
 import ru.hogwarts.school.model.Student;
-import ru.hogwarts.school.repositories.FacultyRepositories;
 import ru.hogwarts.school.repositories.StudentRepositories;
 import ru.hogwarts.school.service.StudentService;
 
@@ -56,4 +55,11 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> getAll() {
         return Collections.unmodifiableList(new ArrayList<>(repository.values()));
     }
+
+    @Override
+    public List<Student> getStudentsByAgeRange(int min, int max) {
+        return studentRepository.findByAgeBetween(min, max);
+    }
+
+
 }
