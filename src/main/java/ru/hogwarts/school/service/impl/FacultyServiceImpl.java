@@ -2,7 +2,6 @@ package ru.hogwarts.school.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.hogwarts.school.exception.GlobalExceptionHandler;
 import ru.hogwarts.school.exception.NotFoundException;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repositories.FacultyRepositories;
@@ -56,4 +55,11 @@ public class FacultyServiceImpl implements FacultyService {
     public List<Faculty> getAll() {
         return Collections.unmodifiableList(new ArrayList<>(repository.values()));
     }
+
+    @Override
+    public List<Faculty> findFacultiesByNameOrColor(String query) {
+        return facultyRepository.findByNameIgnoreCaseOrColorIgnoreCase(query, query);
+    }
+
+
 }

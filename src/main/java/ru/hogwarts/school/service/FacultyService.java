@@ -16,4 +16,7 @@ public interface FacultyService {
     void deleteFaculty(Long id);
 
     List<Faculty> getAll();
+
+    List<Faculty> findFacultiesByNameOrColor(String query);
+
 }

@@ -1,8 +1,5 @@
 package ru.hogwarts.school.controller;
 
-
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,4 +45,15 @@ public class StudentController {
     public List<Student> getAll() {
         return studentService.getAll();
     }
+
+    @GetMapping("/by-age")
+    public List<Student> getStudentsByAgeRange(@RequestParam int min, @RequestParam int max) {
+        return studentService.getStudentsByAgeRange(min, max);
+    }
+    @GetMapping("/{id}/faculty")
+    public Faculty getFacultyByStudent(@PathVariable Long id) {
+        return studentService.getStudent(id).getFaculty();
+    }
+
+
 }
