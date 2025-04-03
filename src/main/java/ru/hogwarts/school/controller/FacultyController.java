@@ -33,8 +33,12 @@ public class FacultyController {
     }
 
     @GetMapping("/{id}")
-    public Faculty getFaculty(@PathVariable(name = "id") Long id) {
-        return facultyService.getFaculty(id);
+    public ResponseEntity<Faculty> getFaculty(@PathVariable(name = "id") Long id) {
+        Faculty faculty = facultyService.getFaculty(id);
+        if (faculty == null) {
+            return ResponseEntity.notFound().build();  // Возвращает статус 404 Not Found
+        }
+        return ResponseEntity.ok(faculty);  // Возвращает статус 200 OK с объектом Faculty
     }
 
     @DeleteMapping("/{id}")
