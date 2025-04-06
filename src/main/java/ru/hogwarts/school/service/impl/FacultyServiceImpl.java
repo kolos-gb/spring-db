@@ -40,13 +40,17 @@ public class FacultyServiceImpl implements FacultyService {
 
     @Override
     public Faculty getFaculty(Long id) {
-        return repository.get(id);
+        Faculty faculty = repository.get(id);
+        if (faculty == null) {
+            throw new NotFoundException("Faculty not found with id: " + id);
+        }
+        return faculty;
     }
 
     @Override
     public void deleteFaculty(Long id) {
         if (!repository.containsKey(id)) {
-            throw new NotFoundException("Not found id - " + id);
+            throw new NotFoundException("Faculty not found with id: " + id);
         }
         repository.remove(id);
     }
