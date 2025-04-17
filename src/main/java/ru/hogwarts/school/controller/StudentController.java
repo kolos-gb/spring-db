@@ -63,5 +63,4 @@ public class StudentController {
     public List<Student> getStudentsByAgeRange(@RequestParam int min, @RequestParam int max) {
         return studentService.getStudentsByAgeRange(min, max);
     }
-
 }
