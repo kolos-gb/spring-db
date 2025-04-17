@@ -1,5 +1,7 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
@@ -17,10 +19,13 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
+
     @PostMapping
-    public Faculty addFaculty(@RequestBody Faculty faculty) {
-        return facultyService.addFaculty(faculty);
+    public ResponseEntity<Faculty> addFaculty(@RequestBody Faculty faculty) {
+        Faculty createdFaculty = facultyService.addFaculty(faculty);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdFaculty);
     }
+
 
     @PutMapping("/{id}")
     public Faculty updateFaculty(@PathVariable(name = "id") Long id, @RequestBody Faculty faculty) {
@@ -28,8 +33,12 @@ public class FacultyController {
     }
 
     @GetMapping("/{id}")
-    public Faculty getFaculty(@PathVariable(name = "id") Long id) {
-        return facultyService.getFaculty(id);
+    public ResponseEntity<Faculty> getFaculty(@PathVariable(name = "id") Long id) {
+        Faculty faculty = facultyService.getFaculty(id);
+        if (faculty == null) {
+            return ResponseEntity.notFound().build();  // Возвращает статус 404 Not Found
+        }
+        return ResponseEntity.ok(faculty);  // Возвращает статус 200 OK с объектом Faculty
     }
 
     @DeleteMapping("/{id}")
