@@ -1,13 +1,12 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.hogwarts.school.exception.NotFoundException;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.FacultyService;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -24,10 +23,8 @@ public class FacultyController {
     @PostMapping
     public ResponseEntity<Faculty> addFaculty(@RequestBody Faculty faculty) {
         Faculty createdFaculty = facultyService.addFaculty(faculty);
-        URI location = URI.create("/faculties/" + createdFaculty.getId());
-        return ResponseEntity.created(location).body(createdFaculty);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdFaculty);
     }
-
 
 
     @PutMapping("/{id}")
@@ -37,23 +34,16 @@ public class FacultyController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Faculty> getFaculty(@PathVariable(name = "id") Long id) {
-        try {
-            Faculty faculty = facultyService.getFaculty(id);
-            return ResponseEntity.ok(faculty);
-        } catch (NotFoundException e) {
-            return ResponseEntity.notFound().build();
+        Faculty faculty = facultyService.getFaculty(id);
+        if (faculty == null) {
+            return ResponseEntity.notFound().build();  // Возвращает статус 404 Not Found
         }
+        return ResponseEntity.ok(faculty);  // Возвращает статус 200 OK с объектом Faculty
     }
 
-
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFaculty(@PathVariable(name = "id") Long id) {
-        try {
-            facultyService.deleteFaculty(id);
-            return ResponseEntity.noContent().build();
-        } catch (NotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public void deleteFaculty(@PathVariable(name = "id") Long id) {
+        facultyService.deleteFaculty(id);
     }
 
     @GetMapping
