@@ -64,16 +64,4 @@ public class StudentController {
         return studentService.getStudentsByAgeRange(min, max);
     }
 
-    @GetMapping("/{id}/faculty")
-    public Faculty getFacultyByStudent(@PathVariable Long id) {
-        Student student = studentService.getStudent(id);
-        if (student != null && student.getFaculty() != null) {
-            System.out.println("Faculty found for student: " + student.getFaculty().getName());
-            return student.getFaculty();
-        } else {
-            System.out.println("No faculty found for student with id: " + id);
-            throw new NotFoundException("Faculty not found for student with id: " + id);
-        }
-    }
-
 }
