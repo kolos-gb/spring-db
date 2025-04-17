@@ -26,37 +26,35 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student addStudent(Student student) {
-        student.setId(++count);
-        repository.put(count, student);
-        return student;
+        return studentRepository.save(student);
     }
 
     @Override
     public Student updateStudent(Long id, Student student) {
-        if (!repository.containsKey(id)) {
-            throw new NotFoundException("Not found id - " + id);
+        if (!studentRepository.existsById(id)) {
+            throw new NotFoundException("Student with id " + id + " not found");
         }
         student.setId(id);
-        repository.put(id, student);
-        return student;
+        return studentRepository.save(student);
     }
 
     @Override
     public Student getStudent(Long id) {
-        return repository.get(id);
+        return studentRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Student with id " + id + " not found"));
     }
 
     @Override
     public void deleteStudent(Long id) {
-        if (!repository.containsKey(id)) {
-            throw new NotFoundException("Not found id - " + id);
+        if (!studentRepository.existsById(id)) {
+            throw new NotFoundException("Student with id " + id + " not found");
         }
-        repository.remove(id);
+        studentRepository.deleteById(id);
     }
 
     @Override
     public List<Student> getAll() {
-        return Collections.unmodifiableList(new ArrayList<>(repository.values()));
+        return studentRepository.findAll();
     }
 
     @Override
