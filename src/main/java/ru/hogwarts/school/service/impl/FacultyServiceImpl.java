@@ -77,5 +77,13 @@ public class FacultyServiceImpl implements FacultyService {
         return facultyRepository.findByNameIgnoreCaseOrColorIgnoreCase(query, query);
     }
 
+    public String getLongestFacultyName() {
+        List<Faculty> faculties = facultyRepository.findAll();
+        return faculties.stream()
+                .map(Faculty::getName)
+                .max((name1, name2) -> Integer.compare(name1.length(), name2.length()))
+                .orElse("No faculties found");
+    }
+
 
 }
