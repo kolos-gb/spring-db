@@ -24,4 +24,6 @@ public interface StudentService {
     double getAverageAge();
 
     int getStudentCount();
+
+    public List<String> getNamesStartingWithA();
 }
