@@ -105,4 +105,12 @@ public class StudentServiceImpl implements StudentService {
                 .collect(Collectors.toList());
     }
 
+    public List<Student> getAllStudents() {
+        return studentRepository.findAll();
+    }
+
+    public synchronized void printStudentName(Student student) {
+        System.out.println(student.getName());
+    }
+
 }

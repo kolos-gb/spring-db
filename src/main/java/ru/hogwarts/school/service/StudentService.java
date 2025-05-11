@@ -26,4 +26,9 @@ public interface StudentService {
     int getStudentCount();
 
     public List<String> getNamesStartingWithA();
+
+    public List<Student> getAllStudents();
+
+    public void printStudentName(Student student);
+
 }
