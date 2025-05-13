@@ -26,4 +26,11 @@ public interface StudentService {
     int getStudentCount();
 
     public List<String> getNamesStartingWithA();
+
+    public List<Student> getAllStudents();
+
+    void printStudentsParallel();
+
+    void printStudentsSynchronized();
+
 }
