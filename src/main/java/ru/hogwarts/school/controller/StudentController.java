@@ -88,52 +88,12 @@ public class StudentController {
 
     @GetMapping("/print-parallel")
     public void printStudentsParallel() {
-        List<Student> students = studentService.getAllStudents().stream()
-                .limit(6)
-                .toList();
-
-        System.out.println("Печать в параллельном режиме:");
-
-        System.out.println(students.get(0).getName());
-        System.out.println(students.get(1).getName());
-
-        Thread thread1 = new Thread(() -> {
-            System.out.println(students.get(2).getName());
-            System.out.println(students.get(3).getName());
-        });
-
-        Thread thread2 = new Thread(() -> {
-            System.out.println(students.get(4).getName());
-            System.out.println(students.get(5).getName());
-        });
-
-        thread1.start();
-        thread2.start();
+        studentService.printStudentsParallel();
     }
 
     @GetMapping("/print-synchronized")
     public void printStudentsSynchronized() {
-        List<Student> students = studentService.getAllStudents().stream()
-                .limit(6)
-                .toList();
-
-        System.out.println("Печать в синхронизированном режиме:");
-
-        studentService.printStudentName(students.get(0));
-        studentService.printStudentName(students.get(1));
-
-        Thread thread1 = new Thread(() -> {
-            studentService.printStudentName(students.get(2));
-            studentService.printStudentName(students.get(3));
-        });
-
-        Thread thread2 = new Thread(() -> {
-            studentService.printStudentName(students.get(4));
-            studentService.printStudentName(students.get(5));
-        });
-
-        thread1.start();
-        thread2.start();
+        studentService.printStudentsSynchronized();
     }
 
 }

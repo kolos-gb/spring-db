@@ -29,6 +29,8 @@ public interface StudentService {
 
     public List<Student> getAllStudents();
 
-    public void printStudentName(Student student);
+    void printStudentsParallel();
+
+    void printStudentsSynchronized();
 
 }
