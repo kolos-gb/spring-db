@@ -1,3 +1,0 @@
-databaseChangeLog:
-  - include:
-      file: liquibase/index-course-four-lesson-three.yml
